@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introsort - Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">SortViz</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Algorithms</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-section">
+                            <h4>Simple Sorts (O(n²))</h4>
+                            <a href="bubble-sort.html">Bubble Sort</a>
+                            <a href="selection-sort.html">Selection Sort</a>
+                            <a href="insertion-sort.html">Insertion Sort</a>
+                            <a href="gnome-sort.html">Gnome Sort</a>
+                            <a href="cocktail-sort.html">Cocktail Shaker Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Efficient Sorts (O(n log n))</h4>
+                            <a href="merge-sort.html">Merge Sort</a>
+                            <a href="quick-sort.html">Quick Sort</a>
+                            <a href="heap-sort.html">Heap Sort</a>
+                            <a href="shell-sort.html">Shell Sort</a>
+                            <a href="comb-sort.html">Comb Sort</a>
+                            <a href="smoothsort.html">Smoothsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Hybrid Sorts</h4>
+                            <a href="timsort.html">Timsort</a>
+                            <a href="introsort.html">Introsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Distribution Sorts</h4>
+                            <a href="counting-sort.html">Counting Sort</a>
+                            <a href="radix-sort.html">Radix Sort</a>
+                            <a href="bucket-sort.html">Bucket Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Educational Sorts</h4>
+                            <a href="bogo-sort.html">Bogo Sort</a>
+                            <a href="sleep-sort.html">Sleep Sort</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="comparison.html" class="nav-link">Comparison</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="visualizer-container">
+            <div class="algorithm-header">
+                <h1 class="algorithm-title">Introsort</h1>
+                <p class="algorithm-description">
+                    Introsort, or introspective sort, is a hybrid sorting algorithm that begins with quicksort
+                    and switches to heapsort when the recursion depth exceeds a level based on the number of
+                    elements being sorted. This prevents quicksort's worst-case O(n²) behavior while maintaining
+                    its average-case O(n log n) performance.
+                </p>
+            </div>
+
+            <div class="complexity-analysis">
+                <h3>Complexity Analysis</h3>
+                <div class="complexity-grid">
+                    <div class="complexity-item">
+                        <h4>Best Case</h4>
+                        <p>O(n log n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Average Case</h4>
+                        <p>O(n log n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Worst Case</h4>
+                        <p>O(n log n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Space Complexity</h4>
+                        <p>O(log n)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualizer-section">
+                <div class="controls">
+                    <button class="control-btn algorithm-select" data-algorithm="introsort">Select Algorithm</button>
+                    <button class="control-btn" id="play-btn">Play</button>
+                    <button class="control-btn" id="pause-btn" style="display: none;">Pause</button>
+                    <button class="control-btn" id="reset-btn">Reset</button>
+                    <button class="control-btn" id="step-btn">Step Forward</button>
+                    <button class="control-btn" id="randomize-btn">Randomize</button>
+
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speed-slider" min="1" max="100" value="50">
+                    </div>
+
+                    <div class="size-control">
+                        <label>Size:</label>
+                        <input type="range" id="size-slider" min="5" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="visualizer-area">
+                    <div class="canvas-container">
+                        <canvas id="visualizer-canvas"></canvas>
+                    </div>
+                    <div class="code-container">
+                        <pre id="code-display">
+function introsort(arr, depth = 0) {
+    const maxDepth = 2 * Math.floor(Math.log2(arr.length));
+
+    if (arr.length <= 16) {
+        // Use insertion sort for small arrays
+        insertionSortSmall(arr);
+    } else if (depth >= maxDepth) {
+        // Switch to heap sort if recursion too deep
+        heapSortIntrospective(arr);
+    } else {
+        // Use quicksort with depth tracking
+        const pivotIndex = partitionIntrospective(arr, depth);
+        introsort(arr.slice(0, pivotIndex), depth + 1);
+        introsort(arr.slice(pivotIndex + 1), depth + 1);
+    }
+
+    return arr;
+}
+
+function partitionIntrospective(arr, depth) {
+    // Median-of-three pivot selection
+    const mid = Math.floor(arr.length / 2);
+    const candidates = [
+        { value: arr[0], index: 0 },
+        { value: arr[mid], index: mid },
+        { value: arr[arr.length - 1], index: arr.length - 1 }
+    ];
+
+    // Sort candidates
+    candidates.sort((a, b) => a.value - b.value);
+
+    // Place median pivot at end
+    [arr[candidates[1].index], arr[arr.length - 1]] =
+    [arr[arr.length - 1], arr[candidates[1].index]];
+
+    // Standard partition
+    const pivot = arr[arr.length - 1];
+    let i = -1;
+
+    for (let j = 0; j < arr.length - 1; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+
+    [arr[i + 1], arr[arr.length - 1]] = [arr[arr.length - 1], arr[i + 1]];
+    return i + 1;
+}
+
+function insertionSortSmall(arr) {
+    for (let i = 1; i < arr.length; i++) {
+        const key = arr[i];
+        let j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}
+
+function heapSortIntrospective(arr) {
+    // Build max heap
+    for (let i = Math.floor(arr.length / 2) - 1; i >= 0; i--) {
+        heapifyIntrospective(arr, arr.length, i);
+    }
+
+    // Extract elements
+    for (let i = arr.length - 1; i > 0; i--) {
+        [arr[0], arr[i]] = [arr[i], arr[0]];
+        heapifyIntrospective(arr, i, 0);
+    }
+}
+
+function heapifyIntrospective(arr, n, i) {
+    let largest = i;
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+
+    if (left < n && arr[left] > arr[largest]) {
+        largest = left;
+    }
+
+    if (right < n && arr[right] > arr[largest]) {
+        largest = right;
+    }
+
+    if (largest !== i) {
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
+        heapifyIntrospective(arr, n, largest);
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-metrics" id="performance-metrics" style="display: none;">
+                <div class="metrics-timer">
+                    <span>Execution Time:</span>
+                    <span class="timer-display" id="timer-display">0.00s</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Comparisons</div>
+                        <div class="metric-value" id="comparisons-count">0</div>
+                        <div class="metric-comparison">O(n log n)</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Swaps</div>
+                        <div class="metric-value" id="swaps-count">0</div>
+                        <div class="metric-comparison">O(n log n)</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Array Size</div>
+                        <div class="metric-value" id="array-size-display">50</div>
+                        <div class="metric-comparison">Current</div>
+                    </div>
+                </div>
+                <div class="metrics-controls">
+                    <button class="metrics-btn" id="start-benchmark">Benchmark</button>
+                    <button class="metrics-btn" id="reset-metrics">Reset</button>
+                    <button class="metrics-btn" id="compare-algorithms">Compare All</button>
+                </div>
+            </div>
+
+            <div class="sound-controls" id="sound-controls" style="display: none;">
+                <h4>🔊 Sound Effects</h4>
+                <div class="sound-grid">
+                    <div class="sound-item">
+                        <label class="sound-label">Enable Sounds</label>
+                        <input type="checkbox" class="sound-toggle" id="sound-toggle" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Comparison Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="comparison-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Swap Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="swap-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Volume</label>
+                        <input type="range" class="sound-volume" id="volume-slider" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+
+            <div class="validation-panel" id="validation-panel" style="display: none;">
+                <h4>✅ Algorithm Validation</h4>
+                <div class="validation-status" id="validation-status">
+                    <span>Status: </span>
+                    <span id="validation-text">Ready</span>
+                </div>
+                <div class="validation-details">
+                    <div class="validation-detail">
+                        <span class="validation-original">Original:</span>
+                        <span id="original-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-sorted">Sorted:</span>
+                        <span id="sorted-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-expected">Expected:</span>
+                        <span id="expected-array">[]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h3>How Introsort Works</h3>
+                <p>
+                    Introsort combines the best aspects of quicksort, heapsort, and insertion sort. It starts
+                    with quicksort but monitors the recursion depth, switching to heapsort if quicksort
+                    appears to be degrading to O(n²) performance.
+                </p>
+
+                <h4>Algorithm Strategy:</h4>
+                <ol>
+                    <li><strong>Start with Quicksort:</strong> Use fast quicksort for most cases</li>
+                    <li><strong>Monitor Depth:</strong> Track recursion depth to detect worst-case behavior</li>
+                    <li><strong>Depth Limit:</strong> Calculate limit based on 2×log₂(n)</li>
+                    <li><strong>Switch to Heapsort:</strong> When depth limit exceeded, use guaranteed O(n log n)</li>
+                    <li><strong>Small Arrays:</strong> Use insertion sort for arrays ≤ 16 elements</li>
+                </ol>
+
+                <h4>Key Innovations:</h4>
+                <ul>
+                    <li><strong>Introspective:</strong> Monitors its own performance characteristics</li>
+                    <li><strong>Hybrid approach:</strong> Uses best algorithm for current situation</li>
+                    <li><strong>Worst-case guarantee:</strong> Always O(n log n) performance</li>
+                    <li><strong>Adaptive switching:</strong> Changes strategy based on runtime behavior</li>
+                </ul>
+
+                <h4>Why Introsort is Important:</h4>
+                <ul>
+                    <li><strong>C++ Standard Library:</strong> Used in std::sort() since C++11</li>
+                    <li><strong>Real-world performance:</strong> Combines speed with reliability</li>
+                    <li><strong>Industry standard:</strong> Proves hybrid algorithms work in practice</li>
+                    <li><strong>Research influence:</strong> Changed how we think about sorting algorithm design</li>
+                </ul>
+
+                <h4>Performance Characteristics:</h4>
+                <ul>
+                    <li><strong>Best Case:</strong> O(n log n) with good pivot selection</li>
+                    <li><strong>Average Case:</strong> O(n log n) same as quicksort</li>
+                    <li><strong>Worst Case:</strong> O(n log n) guaranteed (no O(n²) degradation)</li>
+                    <li><strong>Adaptive:</strong> Maintains quicksort's speed while preventing worst case</li>
+                </ul>
+
+                <h4>Technical Details:</h4>
+                <ul>
+                    <li><strong>Depth limit:</strong> 2×⌊log₂(n)⌋ prevents excessive recursion</li>
+                    <li><strong>Median-of-three:</strong> Better pivot selection than simple quicksort</li>
+                    <li><strong>Small array threshold:</strong> 16 elements for insertion sort</li>
+                    <li><strong>Memory efficient:</strong> In-place sorting with O(log n) stack space</li>
+                </ul>
+
+                <h4>Real-World Impact:</h4>
+                <ul>
+                    <li><strong>C++ std::sort():</strong> Default sorting algorithm in C++ standard library</li>
+                    <li><strong>Performance critical:</strong> Used in high-performance applications</li>
+                    <li><strong>Library implementation:</strong> Shows how hybrid algorithms work in practice</li>
+                    <li><strong>Algorithm design:</strong> Influenced modern sorting algorithm development</li>
+                </ul>
+
+                <h4>Design Philosophy:</h4>
+                <div style="background-color: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
+                    <strong>"Best of all worlds"</strong><br>
+                    Introsort demonstrates that combining multiple algorithms intelligently can provide both speed and reliability.
+                </div>
+
+                <h4>Educational Value:</h4>
+                <ul>
+                    <li><strong>Hybrid algorithm design:</strong> Shows how to combine multiple approaches</li>
+                    <li><strong>Performance monitoring:</strong> Demonstrates self-aware algorithm behavior</li>
+                    <li><strong>Practical engineering:</strong> Real-world algorithm design considerations</li>
+                    <li><strong>Industry relevance:</strong> Used in major programming language libraries</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

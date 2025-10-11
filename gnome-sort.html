@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gnome Sort - Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">SortViz</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Algorithms</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-section">
+                            <h4>Simple Sorts (O(n²))</h4>
+                            <a href="bubble-sort.html">Bubble Sort</a>
+                            <a href="selection-sort.html">Selection Sort</a>
+                            <a href="insertion-sort.html">Insertion Sort</a>
+                            <a href="gnome-sort.html">Gnome Sort</a>
+                            <a href="cocktail-sort.html">Cocktail Shaker Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Efficient Sorts (O(n log n))</h4>
+                            <a href="merge-sort.html">Merge Sort</a>
+                            <a href="quick-sort.html">Quick Sort</a>
+                            <a href="heap-sort.html">Heap Sort</a>
+                            <a href="shell-sort.html">Shell Sort</a>
+                            <a href="comb-sort.html">Comb Sort</a>
+                            <a href="smoothsort.html">Smoothsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Hybrid Sorts</h4>
+                            <a href="timsort.html">Timsort</a>
+                            <a href="introsort.html">Introsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Distribution Sorts</h4>
+                            <a href="counting-sort.html">Counting Sort</a>
+                            <a href="radix-sort.html">Radix Sort</a>
+                            <a href="bucket-sort.html">Bucket Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Educational Sorts</h4>
+                            <a href="bogo-sort.html">Bogo Sort</a>
+                            <a href="sleep-sort.html">Sleep Sort</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="comparison.html" class="nav-link">Comparison</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="visualizer-container">
+            <div class="algorithm-header">
+                <h1 class="algorithm-title">Gnome Sort</h1>
+                <p class="algorithm-description">
+                    Gnome Sort, also known as "Stupid Sort" or "Garden Gnome Sort", is a sorting algorithm
+                    inspired by the way a garden gnome sorts flower pots. It moves through the array like a
+                    gnome walking through a garden, comparing adjacent elements and swapping them if needed.
+                </p>
+            </div>
+
+            <div class="complexity-analysis">
+                <h3>Complexity Analysis</h3>
+                <div class="complexity-grid">
+                    <div class="complexity-item">
+                        <h4>Best Case</h4>
+                        <p>O(n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Average Case</h4>
+                        <p>O(n²)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Worst Case</h4>
+                        <p>O(n²)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Space Complexity</h4>
+                        <p>O(1)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualizer-section">
+                <div class="controls">
+                    <button class="control-btn algorithm-select" data-algorithm="gnomeSort">Select Algorithm</button>
+                    <button class="control-btn" id="play-btn">Play</button>
+                    <button class="control-btn" id="pause-btn" style="display: none;">Pause</button>
+                    <button class="control-btn" id="reset-btn">Reset</button>
+                    <button class="control-btn" id="step-btn">Step Forward</button>
+                    <button class="control-btn" id="randomize-btn">Randomize</button>
+
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speed-slider" min="1" max="100" value="50">
+                    </div>
+
+                    <div class="size-control">
+                        <label>Size:</label>
+                        <input type="range" id="size-slider" min="5" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="visualizer-area">
+                    <div class="canvas-container">
+                        <canvas id="visualizer-canvas"></canvas>
+                    </div>
+                    <div class="code-container">
+                        <pre id="code-display">
+function gnomeSort(arr) {
+    let i = 0;
+
+    while (i < arr.length) {
+        // If at beginning or current element is larger than previous
+        if (i === 0 || arr[i] >= arr[i - 1]) {
+            i++; // Move to next element (gnome takes a step forward)
+        } else {
+            // Current element is smaller than previous
+            // Swap elements (gnome swaps pots)
+            [arr[i], arr[i - 1]] = [arr[i - 1], arr[i]];
+            i--; // Move back to check previous elements
+
+            // If we've moved back to the beginning, take a step forward
+            if (i === 0) {
+                i++;
+            }
+        }
+    }
+
+    return arr;
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-metrics" id="performance-metrics" style="display: none;">
+                <div class="metrics-timer">
+                    <span>Execution Time:</span>
+                    <span class="timer-display" id="timer-display">0.00s</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Comparisons</div>
+                        <div class="metric-value" id="comparisons-count">0</div>
+                        <div class="metric-comparison">O(n²) = 1225</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Swaps</div>
+                        <div class="metric-value" id="swaps-count">0</div>
+                        <div class="metric-comparison">O(n²) = 1225</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Array Size</div>
+                        <div class="metric-value" id="array-size-display">50</div>
+                        <div class="metric-comparison">Current</div>
+                    </div>
+                </div>
+                <div class="metrics-controls">
+                    <button class="metrics-btn" id="start-benchmark">Benchmark</button>
+                    <button class="metrics-btn" id="reset-metrics">Reset</button>
+                    <button class="metrics-btn" id="compare-algorithms">Compare All</button>
+                </div>
+            </div>
+
+            <div class="sound-controls" id="sound-controls" style="display: none;">
+                <h4>🔊 Sound Effects</h4>
+                <div class="sound-grid">
+                    <div class="sound-item">
+                        <label class="sound-label">Enable Sounds</label>
+                        <input type="checkbox" class="sound-toggle" id="sound-toggle" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Comparison Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="comparison-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Swap Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="swap-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Volume</label>
+                        <input type="range" class="sound-volume" id="volume-slider" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+
+            <div class="validation-panel" id="validation-panel" style="display: none;">
+                <h4>✅ Algorithm Validation</h4>
+                <div class="validation-status" id="validation-status">
+                    <span>Status: </span>
+                    <span id="validation-text">Ready</span>
+                </div>
+                <div class="validation-details">
+                    <div class="validation-detail">
+                        <span class="validation-original">Original:</span>
+                        <span id="original-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-sorted">Sorted:</span>
+                        <span id="sorted-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-expected">Expected:</span>
+                        <span id="expected-array">[]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h3>How Gnome Sort Works</h3>
+                <p>
+                    Gnome Sort is inspired by the way a garden gnome might sort flower pots. The gnome walks
+                    through the garden, comparing adjacent pots and swapping them if they're in the wrong order.
+                    When it finds a pot that's out of order, it swaps it and walks back to check previous pots.
+                </p>
+
+                <h4>Gnome's Garden Algorithm:</h4>
+                <ol>
+                    <li><strong>Start at beginning:</strong> Gnome starts at the first flower pot</li>
+                    <li><strong>Compare adjacent pots:</strong> Look at current pot and next pot</li>
+                    <li><strong>If in order:</strong> Take a step forward (move to next pot)</li>
+                    <li><strong>If out of order:</strong> Swap pots and step backward</li>
+                    <li><strong>Continue checking:</strong> Keep walking back until order is restored</li>
+                    <li><strong>Resume forward:</strong> Once fixed, continue moving forward</li>
+                </ol>
+
+                <h4>Key Characteristics:</h4>
+                <ul>
+                    <li><strong>Stable:</strong> Maintains relative order of equal elements</li>
+                    <li><strong>In-place:</strong> Requires only constant extra space O(1)</li>
+                    <li><strong>Adaptive:</strong> Very efficient on nearly sorted arrays</li>
+                    <li><strong>Simple:</strong> Easy to understand and implement</li>
+                    <li><strong>Intuitive:</strong> Based on natural sorting behavior</li>
+                </ul>
+
+                <h4>Gnome's Movement Pattern:</h4>
+                <ul>
+                    <li><strong>Forward movement:</strong> When elements are in correct order</li>
+                    <li><strong>Backward movement:</strong> When out-of-order element is found</li>
+                    <li><strong>Systematic checking:</strong> Ensures all previous elements are correct</li>
+                    <li><strong>Gradual progress:</strong> Like insertion sort but with gnome-like steps</li>
+                </ul>
+
+                <h4>Performance Insights:</h4>
+                <ul>
+                    <li><strong>Best Case:</strong> O(n) when array is already sorted</li>
+                    <li><strong>Worst Case:</strong> O(n²) when array is reverse sorted</li>
+                    <li><strong>Adaptive:</strong> Performance improves with partially sorted data</li>
+                    <li><strong>Comparison count:</strong> Similar to insertion sort</li>
+                </ul>
+
+                <h4>Educational Value:</h4>
+                <ul>
+                    <li><strong>Visual learning:</strong> Easy to visualize the gnome's movement</li>
+                    <li><strong>Algorithm intuition:</strong> Demonstrates natural sorting behavior</li>
+                    <li><strong>Step-by-step analysis:</strong> Clear cause-and-effect relationships</li>
+                    <li><strong>Historical interest:</strong> Shows creative algorithm design inspiration</li>
+                </ul>
+
+                <h4>Comparison with Insertion Sort:</h4>
+                <ul>
+                    <li><strong>Similar approach:</strong> Both build sorted array incrementally</li>
+                    <li><strong>Different movement:</strong> Gnome sort moves back on every out-of-order element</li>
+                    <li><strong>Same complexity:</strong> O(n²) worst case, O(n) best case</li>
+                    <li><strong>Educational focus:</strong> Gnome sort emphasizes the back-and-forth nature</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

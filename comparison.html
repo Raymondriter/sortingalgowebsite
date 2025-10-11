@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Comparison - Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">SortViz</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Algorithms</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-section">
+                            <h4>Simple Sorts (O(n²))</h4>
+                            <a href="bubble-sort.html">Bubble Sort</a>
+                            <a href="selection-sort.html">Selection Sort</a>
+                            <a href="insertion-sort.html">Insertion Sort</a>
+                            <a href="gnome-sort.html">Gnome Sort</a>
+                            <a href="cocktail-sort.html">Cocktail Shaker Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Efficient Sorts (O(n log n))</h4>
+                            <a href="merge-sort.html">Merge Sort</a>
+                            <a href="quick-sort.html">Quick Sort</a>
+                            <a href="heap-sort.html">Heap Sort</a>
+                            <a href="shell-sort.html">Shell Sort</a>
+                            <a href="comb-sort.html">Comb Sort</a>
+                            <a href="smoothsort.html">Smoothsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Hybrid Sorts</h4>
+                            <a href="timsort.html">Timsort</a>
+                            <a href="introsort.html">Introsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Distribution Sorts</h4>
+                            <a href="counting-sort.html">Counting Sort</a>
+                            <a href="radix-sort.html">Radix Sort</a>
+                            <a href="bucket-sort.html">Bucket Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Educational Sorts</h4>
+                            <a href="bogo-sort.html">Bogo Sort</a>
+                            <a href="sleep-sort.html">Sleep Sort</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="comparison.html" class="nav-link active">Comparison</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="comparison-container">
+            <h1>Sorting Algorithm Comparison</h1>
+            <p>Comprehensive comparison of all featured sorting algorithms</p>
+
+            <div class="comparison-table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Best Case</th>
+                            <th>Average Case</th>
+                            <th>Worst Case</th>
+                            <th>Space Complexity</th>
+                            <th>Stable</th>
+                            <th>In-Place</th>
+                            <th>Method</th>
+                            <th>Use Cases</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="bubble-sort.html" class="algorithm-link">Bubble Sort</a></td>
+                            <td class="best-case">O(n)</td>
+                            <td class="average-case">O(n²)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(1)</td>
+                            <td class="stable">Yes</td>
+                            <td class="in-place">Yes</td>
+                            <td>Exchanging</td>
+                            <td>Educational, Small datasets</td>
+                        </tr>
+                        <tr>
+                            <td><a href="selection-sort.html" class="algorithm-link">Selection Sort</a></td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(1)</td>
+                            <td class="unstable">No</td>
+                            <td class="in-place">Yes</td>
+                            <td>Selection</td>
+                            <td>Educational, Small datasets</td>
+                        </tr>
+                        <tr>
+                            <td><a href="insertion-sort.html" class="algorithm-link">Insertion Sort</a></td>
+                            <td class="best-case">O(n)</td>
+                            <td class="average-case">O(n²)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(1)</td>
+                            <td class="stable">Yes</td>
+                            <td class="in-place">Yes</td>
+                            <td>Insertion</td>
+                            <td>Small datasets, Nearly sorted data</td>
+                        </tr>
+                        <tr>
+                            <td><a href="merge-sort.html" class="algorithm-link">Merge Sort</a></td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="space">O(n)</td>
+                            <td class="stable">Yes</td>
+                            <td class="not-in-place">No</td>
+                            <td>Merging</td>
+                            <td>Large datasets, Linked lists</td>
+                        </tr>
+                        <tr>
+                            <td><a href="quick-sort.html" class="algorithm-link">Quick Sort</a></td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="average-case">O(n log n)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(log n)</td>
+                            <td class="unstable">No</td>
+                            <td class="in-place">Yes</td>
+                            <td>Partitioning</td>
+                            <td>Large datasets, Arrays</td>
+                        </tr>
+                        <tr>
+                            <td><a href="heap-sort.html" class="algorithm-link">Heap Sort</a></td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="space">O(1)</td>
+                            <td class="unstable">No</td>
+                            <td class="in-place">Yes</td>
+                            <td>Selection</td>
+                            <td>Large datasets, Guaranteed performance</td>
+                        </tr>
+                        <tr>
+                            <td><a href="counting-sort.html" class="algorithm-link">Counting Sort</a></td>
+                            <td class="best-case">O(n + k)</td>
+                            <td class="best-case">O(n + k)</td>
+                            <td class="best-case">O(n + k)</td>
+                            <td class="space">O(n + k)</td>
+                            <td class="stable">Yes</td>
+                            <td class="not-in-place">No</td>
+                            <td>Distribution</td>
+                            <td>Small range integers</td>
+                        </tr>
+                        <tr>
+                            <td><a href="radix-sort.html" class="algorithm-link">Radix Sort</a></td>
+                            <td class="best-case">O(nk)</td>
+                            <td class="best-case">O(nk)</td>
+                            <td class="best-case">O(nk)</td>
+                            <td class="space">O(n + k)</td>
+                            <td class="stable">Yes</td>
+                            <td class="not-in-place">No</td>
+                            <td>Distribution</td>
+                            <td>Integers, Strings</td>
+                        </tr>
+                        <tr>
+                            <td><a href="timsort.html" class="algorithm-link">Timsort</a></td>
+                            <td class="best-case">O(n)</td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="worst-case">O(n log n)</td>
+                            <td class="space">O(n)</td>
+                            <td class="stable">Yes</td>
+                            <td class="not-in-place">No</td>
+                            <td>Hybrid</td>
+                            <td>Python's default sort</td>
+                        </tr>
+                        <tr>
+                            <td><a href="gnome-sort.html" class="algorithm-link">Gnome Sort</a></td>
+                            <td class="best-case">O(n)</td>
+                            <td class="average-case">O(n²)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(1)</td>
+                            <td class="stable">Yes</td>
+                            <td class="in-place">Yes</td>
+                            <td>Insertion</td>
+                            <td>Educational</td>
+                        </tr>
+                        <tr>
+                            <td><a href="cocktail-sort.html" class="algorithm-link">Cocktail Shaker Sort</a></td>
+                            <td class="best-case">O(n)</td>
+                            <td class="average-case">O(n²)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(1)</td>
+                            <td class="stable">Yes</td>
+                            <td class="in-place">Yes</td>
+                            <td>Exchanging</td>
+                            <td>Educational, Bidirectional bubble sort</td>
+                        </tr>
+                        <tr>
+                            <td><a href="shell-sort.html" class="algorithm-link">Shell Sort</a></td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="average-case">O(n^(4/3))</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(1)</td>
+                            <td class="unstable">No</td>
+                            <td class="in-place">Yes</td>
+                            <td>Insertion</td>
+                            <td>Medium-sized datasets</td>
+                        </tr>
+                        <tr>
+                            <td><a href="comb-sort.html" class="algorithm-link">Comb Sort</a></td>
+                            <td class="best-case">O(n log n)</td>
+                            <td class="average-case">O(n²/2^p)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(1)</td>
+                            <td class="unstable">No</td>
+                            <td class="in-place">Yes</td>
+                            <td>Exchanging</td>
+                            <td>Improved bubble sort</td>
+                        </tr>
+                        <tr>
+                            <td><a href="bucket-sort.html" class="algorithm-link">Bucket Sort</a></td>
+                            <td class="best-case">O(n + k)</td>
+                            <td class="average-case">O(n + k)</td>
+                            <td class="worst-case">O(n²)</td>
+                            <td class="space">O(n + k)</td>
+                            <td class="stable">Yes</td>
+                            <td class="not-in-place">No</td>
+                            <td>Distribution</td>
+                            <td>Uniformly distributed data</td>
+                        </tr>
+                        <tr>
+                            <td><a href="bogo-sort.html" class="algorithm-link">Bogo Sort</a></td>
+                            <td class="worst-case">O(n × n!)</td>
+                            <td class="worst-case">O((n+1)×n!)</td>
+                            <td class="worst-case">O(∞)</td>
+                            <td class="space">O(1)</td>
+                            <td class="unstable">No</td>
+                            <td class="in-place">Yes</td>
+                            <td>Random</td>
+                            <td>Educational (worst-case example)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="comparison-legend">
+                <h3>Understanding the Table</h3>
+
+                <div class="legend-section">
+                    <h4>Time Complexity</h4>
+                    <ul>
+                        <li><strong>O(1)</strong> - Constant time</li>
+                        <li><strong>O(n)</strong> - Linear time</li>
+                        <li><strong>O(n log n)</strong> - Linearithmic time</li>
+                        <li><strong>O(n²)</strong> - Quadratic time</li>
+                        <li><strong>O(n!)</strong> - Factorial time (very slow)</li>
+                    </ul>
+                </div>
+
+                <div class="legend-section">
+                    <h4>Space Complexity</h4>
+                    <ul>
+                        <li><strong>O(1)</strong> - Constant space (in-place)</li>
+                        <li><strong>O(log n)</strong> - Logarithmic space</li>
+                        <li><strong>O(n)</strong> - Linear space</li>
+                        <li><strong>O(n + k)</strong> - Linear space plus extra for counting/buckets</li>
+                    </ul>
+                </div>
+
+                <div class="legend-section">
+                    <h4>Stability</h4>
+                    <p>Stable algorithms maintain the relative order of equal elements</p>
+                </div>
+
+                <div class="legend-section">
+                    <h4>In-Place vs Not In-Place</h4>
+                    <ul>
+                        <li><strong>In-Place:</strong> Uses only O(1) extra space</li>
+                        <li><strong>Not In-Place:</strong> Requires additional space proportional to input size</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="algorithm-recommendations">
+                <h3>When to Use Each Algorithm</h3>
+
+                <div class="recommendation-grid">
+                    <div class="recommendation-card">
+                        <h4>For Small Datasets</h4>
+                        <p>Use <strong>Insertion Sort</strong> or <strong>Bubble Sort</strong> for very small arrays (n ≤ 20) where simplicity matters more than performance.</p>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <h4>For Large Datasets</h4>
+                        <p>Use <strong>Quick Sort</strong> or <strong>Merge Sort</strong> for large arrays where O(n log n) performance is crucial.</p>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <h4>For Nearly Sorted Data</h4>
+                        <p><strong>Insertion Sort</strong> or <strong>Bubble Sort</strong> perform very well on data that's already mostly sorted.</p>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <h4>When Stability Matters</h4>
+                        <p>Choose <strong>Merge Sort</strong>, <strong>Timsort</strong>, or <strong>Insertion Sort</strong> when you need to maintain the relative order of equal elements.</p>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <h4>For Guaranteed Performance</h4>
+                        <p><strong>Heap Sort</strong> or <strong>Merge Sort</strong> provide consistent O(n log n) performance in worst case.</p>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <h4>For Integers with Small Range</h4>
+                        <p><strong>Counting Sort</strong> or <strong>Radix Sort</strong> can achieve linear time complexity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

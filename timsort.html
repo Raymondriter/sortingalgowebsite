@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timsort - Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">SortViz</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Algorithms</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-section">
+                            <h4>Simple Sorts (O(n²))</h4>
+                            <a href="bubble-sort.html">Bubble Sort</a>
+                            <a href="selection-sort.html">Selection Sort</a>
+                            <a href="insertion-sort.html">Insertion Sort</a>
+                            <a href="gnome-sort.html">Gnome Sort</a>
+                            <a href="cocktail-sort.html">Cocktail Shaker Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Efficient Sorts (O(n log n))</h4>
+                            <a href="merge-sort.html">Merge Sort</a>
+                            <a href="quick-sort.html">Quick Sort</a>
+                            <a href="heap-sort.html">Heap Sort</a>
+                            <a href="shell-sort.html">Shell Sort</a>
+                            <a href="comb-sort.html">Comb Sort</a>
+                            <a href="smoothsort.html">Smoothsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Hybrid Sorts</h4>
+                            <a href="timsort.html">Timsort</a>
+                            <a href="introsort.html">Introsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Distribution Sorts</h4>
+                            <a href="counting-sort.html">Counting Sort</a>
+                            <a href="radix-sort.html">Radix Sort</a>
+                            <a href="bucket-sort.html">Bucket Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Educational Sorts</h4>
+                            <a href="bogo-sort.html">Bogo Sort</a>
+                            <a href="sleep-sort.html">Sleep Sort</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="comparison.html" class="nav-link">Comparison</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="visualizer-container">
+            <div class="algorithm-header">
+                <h1 class="algorithm-title">Timsort</h1>
+                <p class="algorithm-description">
+                    Timsort is a hybrid sorting algorithm derived from merge sort and insertion sort, designed
+                    to perform well on many kinds of real-world data. It was designed by Tim Peters for use
+                    in Python's sort function and is also used in Java's Arrays.sort() for objects.
+                </p>
+            </div>
+
+            <div class="complexity-analysis">
+                <h3>Complexity Analysis</h3>
+                <div class="complexity-grid">
+                    <div class="complexity-item">
+                        <h4>Best Case</h4>
+                        <p>O(n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Average Case</h4>
+                        <p>O(n log n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Worst Case</h4>
+                        <p>O(n log n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Space Complexity</h4>
+                        <p>O(n)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualizer-section">
+                <div class="controls">
+                    <button class="control-btn algorithm-select" data-algorithm="timsort">Select Algorithm</button>
+                    <button class="control-btn" id="play-btn">Play</button>
+                    <button class="control-btn" id="pause-btn" style="display: none;">Pause</button>
+                    <button class="control-btn" id="reset-btn">Reset</button>
+                    <button class="control-btn" id="step-btn">Step Forward</button>
+                    <button class="control-btn" id="randomize-btn">Randomize</button>
+
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speed-slider" min="1" max="100" value="50">
+                    </div>
+
+                    <div class="size-control">
+                        <label>Size:</label>
+                        <input type="range" id="size-slider" min="5" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="visualizer-area">
+                    <div class="canvas-container">
+                        <canvas id="visualizer-canvas"></canvas>
+                    </div>
+                    <div class="code-container">
+                        <pre id="code-display">
+function timsort(arr) {
+    const RUN = 32; // Size of runs to be sorted with insertion sort
+
+    // Sort individual subarrays of size RUN
+    for (let i = 0; i < arr.length; i += RUN) {
+        insertionSortRun(arr, i, Math.min(i + RUN - 1, arr.length - 1));
+    }
+
+    // Merge runs using merge sort logic
+    for (let size = RUN; size < arr.length; size = 2 * size) {
+        for (let left = 0; left < arr.length; left += 2 * size) {
+            const mid = left + size - 1;
+            const right = Math.min(left + 2 * size - 1, arr.length - 1);
+
+            if (mid < right) {
+                mergeRuns(arr, left, mid, right);
+            }
+        }
+    }
+
+    return arr;
+}
+
+function insertionSortRun(arr, left, right) {
+    for (let i = left + 1; i <= right; i++) {
+        const temp = arr[i];
+        let j = i - 1;
+
+        while (j >= left && arr[j] > temp) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = temp;
+    }
+}
+
+function mergeRuns(arr, left, mid, right) {
+    const leftArray = arr.slice(left, mid + 1);
+    const rightArray = arr.slice(mid + 1, right + 1);
+
+    let i = 0, j = 0, k = left;
+
+    while (i < leftArray.length && j < rightArray.length) {
+        if (leftArray[i] <= rightArray[j]) {
+            arr[k] = leftArray[i];
+            i++;
+        } else {
+            arr[k] = rightArray[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < leftArray.length) {
+        arr[k] = leftArray[i];
+        i++;
+        k++;
+    }
+
+    while (j < rightArray.length) {
+        arr[k] = rightArray[j];
+        j++;
+        k++;
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-metrics" id="performance-metrics" style="display: none;">
+                <div class="metrics-timer">
+                    <span>Execution Time:</span>
+                    <span class="timer-display" id="timer-display">0.00s</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Comparisons</div>
+                        <div class="metric-value" id="comparisons-count">0</div>
+                        <div class="metric-comparison">O(n log n) = 282</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Swaps</div>
+                        <div class="metric-value" id="swaps-count">0</div>
+                        <div class="metric-comparison">O(n log n) = 282</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Array Size</div>
+                        <div class="metric-value" id="array-size-display">50</div>
+                        <div class="metric-comparison">Current</div>
+                    </div>
+                </div>
+                <div class="metrics-controls">
+                    <button class="metrics-btn" id="start-benchmark">Benchmark</button>
+                    <button class="metrics-btn" id="reset-metrics">Reset</button>
+                    <button class="metrics-btn" id="compare-algorithms">Compare All</button>
+                </div>
+            </div>
+
+            <div class="sound-controls" id="sound-controls" style="display: none;">
+                <h4>🔊 Sound Effects</h4>
+                <div class="sound-grid">
+                    <div class="sound-item">
+                        <label class="sound-label">Enable Sounds</label>
+                        <input type="checkbox" class="sound-toggle" id="sound-toggle" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Comparison Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="comparison-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Swap Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="swap-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Volume</label>
+                        <input type="range" class="sound-volume" id="volume-slider" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+
+            <div class="validation-panel" id="validation-panel" style="display: none;">
+                <h4>✅ Algorithm Validation</h4>
+                <div class="validation-status" id="validation-status">
+                    <span>Status: </span>
+                    <span id="validation-text">Ready</span>
+                </div>
+                <div class="validation-details">
+                    <div class="validation-detail">
+                        <span class="validation-original">Original:</span>
+                        <span id="original-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-sorted">Sorted:</span>
+                        <span id="sorted-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-expected">Expected:</span>
+                        <span id="expected-array">[]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h3>How Timsort Works</h3>
+                <p>
+                    Timsort combines the best aspects of merge sort and insertion sort. It identifies naturally
+                    occurring runs (sorted sequences) in the data and uses insertion sort for small runs,
+                    then merges these runs using a merge sort approach.
+                </p>
+
+                <h4>Algorithm Strategy:</h4>
+                <ol>
+                    <li><strong>Identify Runs:</strong> Find naturally sorted sequences in the data</li>
+                    <li><strong>Sort Small Runs:</strong> Use insertion sort for runs smaller than 32 elements</li>
+                    <li><strong>Extend Runs:</strong> Grow runs by including adjacent elements that maintain order</li>
+                    <li><strong>Merge Runs:</strong> Merge sorted runs using merge sort's merging strategy</li>
+                    <li><strong>Balanced Merging:</strong> Use galloping mode for efficient merging</li>
+                </ol>
+
+                <h4>Key Innovations:</h4>
+                <ul>
+                    <li><strong>Adaptive:</strong> Takes advantage of existing order in data</li>
+                    <li><strong>Hybrid approach:</strong> Uses best tool for each job (insertion vs merge)</li>
+                    <li><strong>Stable:</strong> Maintains relative order of equal elements</li>
+                    <li><strong>Galloping:</strong> Optimized merging for runs of different sizes</li>
+                </ul>
+
+                <h4>Why Timsort is Special:</h4>
+                <ul>
+                    <li><strong>Python's default:</strong> Used in Python's sort() and sorted() functions</li>
+                    <li><strong>Java implementation:</strong> Used for Arrays.sort() with objects</li>
+                    <li><strong>Real-world optimization:</strong> Designed for real-world data patterns</li>
+                    <li><strong>Research-based:</strong> Result of extensive empirical analysis</li>
+                </ul>
+
+                <h4>Performance Characteristics:</h4>
+                <ul>
+                    <li><strong>Best Case:</strong> O(n) when data is already sorted or nearly sorted</li>
+                    <li><strong>Worst Case:</strong> O(n log n) guaranteed, same as merge sort</li>
+                    <li><strong>Adaptive:</strong> Performance improves with partially sorted data</li>
+                    <li><strong>Stable:</strong> Preserves order of equal elements</li>
+                </ul>
+
+                <h4>Real-World Impact:</h4>
+                <ul>
+                    <li><strong>Python:</strong> Default sorting algorithm since Python 2.2</li>
+                    <li><strong>Java:</strong> Used for sorting arrays of objects</li>
+                    <li><strong>Android:</strong> Platform's default sorting implementation</li>
+                    <li><strong>Research influence:</strong> Changed how we think about sorting algorithms</li>
+                </ul>
+
+                <h4>Design Philosophy:</h4>
+                <div style="background-color: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--accent-green);">
+                    <strong>"Use the right algorithm for the right job"</strong><br>
+                    Timsort demonstrates that hybrid approaches can outperform pure algorithms by adapting to data characteristics.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

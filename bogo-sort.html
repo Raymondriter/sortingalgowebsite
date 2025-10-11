@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bogo Sort - Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">SortViz</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Algorithms</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-section">
+                            <h4>Simple Sorts (O(n²))</h4>
+                            <a href="bubble-sort.html">Bubble Sort</a>
+                            <a href="selection-sort.html">Selection Sort</a>
+                            <a href="insertion-sort.html">Insertion Sort</a>
+                            <a href="gnome-sort.html">Gnome Sort</a>
+                            <a href="cocktail-sort.html">Cocktail Shaker Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Efficient Sorts (O(n log n))</h4>
+                            <a href="merge-sort.html">Merge Sort</a>
+                            <a href="quick-sort.html">Quick Sort</a>
+                            <a href="heap-sort.html">Heap Sort</a>
+                            <a href="shell-sort.html">Shell Sort</a>
+                            <a href="comb-sort.html">Comb Sort</a>
+                            <a href="smoothsort.html">Smoothsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Hybrid Sorts</h4>
+                            <a href="timsort.html">Timsort</a>
+                            <a href="introsort.html">Introsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Distribution Sorts</h4>
+                            <a href="counting-sort.html">Counting Sort</a>
+                            <a href="radix-sort.html">Radix Sort</a>
+                            <a href="bucket-sort.html">Bucket Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Educational Sorts</h4>
+                            <a href="bogo-sort.html">Bogo Sort</a>
+                            <a href="sleep-sort.html">Sleep Sort</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="comparison.html" class="nav-link">Comparison</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="visualizer-container">
+            <div class="algorithm-header">
+                <h1 class="algorithm-title">Bogo Sort</h1>
+                <p class="algorithm-description">
+                    Bogo Sort, also known as "stupid sort" or "shotgun sort", is a highly inefficient sorting
+                    algorithm based on the generate-and-test paradigm. It works by randomly permuting the
+                    array and checking if it's sorted, repeating until it accidentally becomes sorted.
+                </p>
+            </div>
+
+            <div class="complexity-analysis">
+                <h3>Complexity Analysis</h3>
+                <div class="complexity-grid">
+                    <div class="complexity-item">
+                        <h4>Best Case</h4>
+                        <p>O(n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Average Case</h4>
+                        <p>O((n+1)!)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Worst Case</h4>
+                        <p>O(∞)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Space Complexity</h4>
+                        <p>O(1)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualizer-section">
+                <div class="controls">
+                    <button class="control-btn algorithm-select" data-algorithm="bogoSort">Select Algorithm</button>
+                    <button class="control-btn" id="play-btn">Play</button>
+                    <button class="control-btn" id="pause-btn" style="display: none;">Pause</button>
+                    <button class="control-btn" id="reset-btn">Reset</button>
+                    <button class="control-btn" id="step-btn">Step Forward</button>
+                    <button class="control-btn" id="randomize-btn">Randomize</button>
+
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speed-slider" min="1" max="100" value="50">
+                    </div>
+
+                    <div class="size-control">
+                        <label>Size:</label>
+                        <input type="range" id="size-slider" min="3" max="8" value="5">
+                    </div>
+                </div>
+
+                <div class="visualizer-area">
+                    <div class="canvas-container">
+                        <canvas id="visualizer-canvas"></canvas>
+                    </div>
+                    <div class="code-container">
+                        <pre id="code-display">
+function bogoSort(arr) {
+    let attempts = 0;
+
+    // Keep trying until sorted
+    while (!isSorted(arr)) {
+        attempts++;
+
+        // Randomly shuffle the array
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+
+        // Check if sorted (very rarely happens!)
+        if (isSorted(arr)) {
+            console.log(`Sorted after ${attempts} attempts!`);
+            break;
+        }
+    }
+
+    return arr;
+}
+
+function isSorted(arr) {
+    for (let i = 0; i < arr.length - 1; i++) {
+        if (arr[i] > arr[i + 1]) {
+            return false;
+        }
+    }
+    return true;
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-metrics" id="performance-metrics" style="display: none;">
+                <div class="metrics-timer">
+                    <span>Execution Time:</span>
+                    <span class="timer-display" id="timer-display">0.00s</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Comparisons</div>
+                        <div class="metric-value" id="comparisons-count">0</div>
+                        <div class="metric-comparison">O(n × n!) = ∞</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Swaps</div>
+                        <div class="metric-value" id="swaps-count">0</div>
+                        <div class="metric-comparison">O(n!) = 120</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Array Size</div>
+                        <div class="metric-value" id="array-size-display">5</div>
+                        <div class="metric-comparison">Current</div>
+                    </div>
+                </div>
+                <div class="metrics-controls">
+                    <button class="metrics-btn" id="start-benchmark">Benchmark</button>
+                    <button class="metrics-btn" id="reset-metrics">Reset</button>
+                    <button class="metrics-btn" id="compare-algorithms">Compare All</button>
+                </div>
+            </div>
+
+            <div class="sound-controls" id="sound-controls" style="display: none;">
+                <h4>🔊 Sound Effects</h4>
+                <div class="sound-grid">
+                    <div class="sound-item">
+                        <label class="sound-label">Enable Sounds</label>
+                        <input type="checkbox" class="sound-toggle" id="sound-toggle" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Comparison Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="comparison-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Swap Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="swap-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Volume</label>
+                        <input type="range" class="sound-volume" id="volume-slider" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+
+            <div class="validation-panel" id="validation-panel" style="display: none;">
+                <h4>✅ Algorithm Validation</h4>
+                <div class="validation-status" id="validation-status">
+                    <span>Status: </span>
+                    <span id="validation-text">Ready</span>
+                </div>
+                <div class="validation-details">
+                    <div class="validation-detail">
+                        <span class="validation-original">Original:</span>
+                        <span id="original-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-sorted">Sorted:</span>
+                        <span id="sorted-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-expected">Expected:</span>
+                        <span id="expected-array">[]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h3>How Bogo Sort Works</h3>
+                <p>
+                    Bogo Sort is the quintessential example of a terrible sorting algorithm. It embodies the
+                    "generate and test" approach: randomly rearrange elements and hope they end up sorted.
+                </p>
+
+                <h4>Algorithm Steps:</h4>
+                <ol>
+                    <li><strong>Check if sorted:</strong> Verify if array is in correct order</li>
+                    <li><strong>If not sorted:</strong> Randomly shuffle all elements</li>
+                    <li><strong>Repeat:</strong> Continue shuffling until accidentally sorted</li>
+                    <li><strong>Success:</strong> Eventually, by pure chance, it becomes sorted</li>
+                </ol>
+
+                <h4>Why Study Bogo Sort?</h4>
+                <ul>
+                    <li><strong>Educational value:</strong> Demonstrates what NOT to do</li>
+                    <li><strong>Complexity theory:</strong> Shows worst-case unbounded algorithms</li>
+                    <li><strong>Randomization:</strong> Introduces probabilistic algorithms</li>
+                    <li><strong>Appreciation:</strong> Makes efficient algorithms seem miraculous</li>
+                </ul>
+
+                <h4>Performance Reality:</h4>
+                <ul>
+                    <li><strong>Theoretical worst case:</strong> Could run forever (unbounded)</li>
+                    <li><strong>Expected attempts:</strong> n! (factorial) for n elements</li>
+                    <li><strong>Practical limit:</strong> Only feasible for very small arrays (n ≤ 8)</li>
+                    <li><strong>Demonstration:</strong> Shows why deterministic algorithms matter</li>
+                </ul>
+
+                <h4>Fun Facts:</h4>
+                <ul>
+                    <li><strong>Also called:</strong> Stupid Sort, Shotgun Sort, Monkey Sort</li>
+                    <li><strong>Related algorithms:</strong> Quantum Bogo Sort, Bozo Sort</li>
+                    <li><strong>Teaching tool:</strong> Perfect for explaining algorithm efficiency</li>
+                    <li><strong>Party trick:</strong> Can actually sort very small arrays!</li>
+                </ul>
+
+                <h4>Important Notes:</h4>
+                <div style="background-color: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
+                    <strong>⚠️ Warning:</strong> Bogo Sort is extremely inefficient! For demonstration purposes only.
+                    For n > 10, it becomes computationally infeasible. Use small array sizes (3-8 elements) only.
+                </div>
+
+                <h4>Educational Value:</h4>
+                <ul>
+                    <li><strong>Appreciating efficiency:</strong> Makes O(n log n) seem incredibly fast</li>
+                    <li><strong>Understanding randomness:</strong> Demonstrates probabilistic approaches</li>
+                    <li><strong>Algorithm theory:</strong> Shows that correctness ≠ usefulness</li>
+                    <li><strong>Historical perspective:</strong> Represents early "naive" algorithm design</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

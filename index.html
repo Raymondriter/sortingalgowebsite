@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">SortViz</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Algorithms</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-section">
+                            <h4>Simple Sorts (O(n²))</h4>
+                            <a href="bubble-sort.html">Bubble Sort</a>
+                            <a href="selection-sort.html">Selection Sort</a>
+                            <a href="insertion-sort.html">Insertion Sort</a>
+                            <a href="gnome-sort.html">Gnome Sort</a>
+                            <a href="cocktail-sort.html">Cocktail Shaker Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Efficient Sorts (O(n log n))</h4>
+                            <a href="merge-sort.html">Merge Sort</a>
+                            <a href="quick-sort.html">Quick Sort</a>
+                            <a href="heap-sort.html">Heap Sort</a>
+                            <a href="shell-sort.html">Shell Sort</a>
+                            <a href="comb-sort.html">Comb Sort</a>
+                            <a href="smoothsort.html">Smoothsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Hybrid Sorts</h4>
+                            <a href="timsort.html">Timsort</a>
+                            <a href="introsort.html">Introsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Distribution Sorts</h4>
+                            <a href="counting-sort.html">Counting Sort</a>
+                            <a href="radix-sort.html">Radix Sort</a>
+                            <a href="bucket-sort.html">Bucket Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Educational Sorts</h4>
+                            <a href="bogo-sort.html">Bogo Sort</a>
+                            <a href="sleep-sort.html">Sleep Sort</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="comparison.html" class="nav-link">Comparison</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>🎓 Interactive Sorting Algorithm Academy</h1>
+            <p>Master 18 sorting algorithms through immersive visualizations, quizzes, progress tracking, and hands-on coding challenges. The ultimate educational platform for algorithm learning!</p>
+            <div class="hero-buttons">
+                <a href="#algorithms" class="cta-button primary">Start Learning</a>
+                <a href="#quiz" class="cta-button secondary">Take Quiz</a>
+                <a href="#progress" class="cta-button outline">View Progress</a>
+            </div>
+        </section>
+
+        <!-- Learning Progress Dashboard -->
+        <section id="progress" class="progress-dashboard" style="display: none;">
+            <h2>📊 Your Learning Journey</h2>
+            <div class="progress-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="algorithms-mastered">0</div>
+                    <div class="stat-label">Algorithms Mastered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="quiz-score">0%</div>
+                    <div class="stat-label">Average Quiz Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="study-streak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-study-time">0h</div>
+                    <div class="stat-label">Study Time</div>
+                </div>
+            </div>
+
+            <div class="progress-categories">
+                <div class="category-progress">
+                    <h3>Simple Sorts (O(n²))</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="simple-progress" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/5 Completed</span>
+                </div>
+
+                <div class="category-progress">
+                    <h3>Efficient Sorts (O(n log n))</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="efficient-progress" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/6 Completed</span>
+                </div>
+
+                <div class="category-progress">
+                    <h3>Hybrid Sorts</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="hybrid-progress" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/2 Completed</span>
+                </div>
+
+                <div class="category-progress">
+                    <h3>Distribution Sorts</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="distribution-progress" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/3 Completed</span>
+                </div>
+
+                <div class="category-progress">
+                    <h3>Educational Sorts</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="educational-progress" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text">0/2 Completed</span>
+                </div>
+            </div>
+
+            <div class="achievement-badges">
+                <h3>🏆 Recent Achievements</h3>
+                <div class="badges-container" id="achievement-badges">
+                    <div class="badge locked">
+                        <span class="badge-icon">🔒</span>
+                        <span class="badge-name">First Steps</span>
+                        <span class="badge-desc">Complete your first algorithm</span>
+                    </div>
+                    <div class="badge locked">
+                        <span class="badge-icon">🔒</span>
+                        <span class="badge-name">Speed Demon</span>
+                        <span class="badge-desc">Master 5 algorithms</span>
+                    </div>
+                    <div class="badge locked">
+                        <span class="badge-icon">🔒</span>
+                        <span class="badge-name">Quiz Master</span>
+                        <span class="badge-desc">Score 100% on 3 quizzes</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="algorithms" class="algorithms-grid">
+            <h2>Featured Algorithms</h2>
+
+            <div class="category-section">
+                <h3>Simple Sorts (Quadratic Time)</h3>
+                <div class="algorithm-cards">
+                    <div class="algorithm-card">
+                        <h4>Bubble Sort</h4>
+                        <p>Repeatedly swaps adjacent elements if they are in wrong order</p>
+                        <span class="complexity">O(n²)</span>
+                        <a href="bubble-sort.html" class="card-link">Visualize</a>
+                    </div>
+                    <div class="algorithm-card">
+                        <h4>Selection Sort</h4>
+                        <p>Finds minimum element and places it at the beginning</p>
+                        <span class="complexity">O(n²)</span>
+                        <a href="selection-sort.html" class="card-link">Visualize</a>
+                    </div>
+                    <div class="algorithm-card">
+                        <h4>Insertion Sort</h4>
+                        <p>Builds final sorted array one item at a time</p>
+                        <span class="complexity">O(n²)</span>
+                        <a href="insertion-sort.html" class="card-link">Visualize</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <h3>Efficient Sorts (Sub-Quadratic Time)</h3>
+                <div class="algorithm-cards">
+                    <div class="algorithm-card">
+                        <h4>Merge Sort</h4>
+                        <p>Divides array into halves and recursively sorts them</p>
+                        <span class="complexity">O(n log n)</span>
+                        <a href="merge-sort.html" class="card-link">Visualize</a>
+                    </div>
+                    <div class="algorithm-card">
+                        <h4>Quick Sort</h4>
+                        <p>Selects pivot and partitions array around it</p>
+                        <span class="complexity">O(n log n)</span>
+                        <a href="quick-sort.html" class="card-link">Visualize</a>
+                    </div>
+                    <div class="algorithm-card">
+                        <h4>Heap Sort</h4>
+                        <p>Uses heap data structure to sort elements</p>
+                        <span class="complexity">O(n log n)</span>
+                        <a href="heap-sort.html" class="card-link">Visualize</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Quiz Section -->
+        <section id="quiz" class="quiz-section" style="display: none;">
+            <h2>🧠 Algorithm Knowledge Quiz</h2>
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-progress">
+                        <span class="question-counter">Question <span id="question-number">1</span> of <span id="total-questions">10</span></span>
+                        <div class="quiz-timer">⏱️ <span id="quiz-timer">30</span>s</div>
+                    </div>
+                    <div class="quiz-score">Score: <span id="current-score">0</span>/10</div>
+                </div>
+
+                <div class="quiz-question" id="quiz-question">
+                    <h3>Loading question...</h3>
+                </div>
+
+                <div class="quiz-options" id="quiz-options">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+
+                <div class="quiz-feedback" id="quiz-feedback" style="display: none;">
+                    <div class="feedback-content"></div>
+                    <button class="next-btn" id="next-question">Next Question</button>
+                </div>
+
+                <div class="quiz-actions">
+                    <button class="quiz-btn" id="start-quiz">Start Quiz</button>
+                    <button class="quiz-btn secondary" id="restart-quiz" style="display: none;">Restart Quiz</button>
+                </div>
+            </div>
+
+            <div class="quiz-history" id="quiz-history" style="display: none;">
+                <h3>📚 Quiz History</h3>
+                <div class="history-list" id="history-list">
+                    <!-- Quiz history will be populated here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Code Playground -->
+        <section id="playground" class="code-playground" style="display: none;">
+            <h2>💻 Interactive Code Playground</h2>
+            <div class="playground-container">
+                <div class="code-editor-section">
+                    <h3>Algorithm Implementation</h3>
+                    <div class="editor-toolbar">
+                        <select id="algorithm-select" class="algorithm-dropdown">
+                            <option value="bubble">Bubble Sort</option>
+                            <option value="selection">Selection Sort</option>
+                            <option value="insertion">Insertion Sort</option>
+                            <option value="merge">Merge Sort</option>
+                            <option value="quick">Quick Sort</option>
+                        </select>
+                        <button id="load-template" class="toolbar-btn">Load Template</button>
+                        <button id="reset-code" class="toolbar-btn">Reset</button>
+                        <button id="run-code" class="toolbar-btn primary">Run Code</button>
+                    </div>
+                    <div class="code-editor" id="code-editor" contenteditable="true">
+function bubbleSort(arr) {
+    // Your implementation here
+    for (let i = 0; i < arr.length; i++) {
+        // TODO: Implement bubble sort
+    }
+    return arr;
+}</div>
+                    <div class="editor-status" id="editor-status">Ready to code!</div>
+                </div>
+
+                <div class="playground-output">
+                    <div class="output-section">
+                        <h3>Visualization</h3>
+                        <div class="mini-visualizer">
+                            <canvas id="playground-canvas" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="output-section">
+                        <h3>Test Results</h3>
+                        <div class="test-results" id="test-results">
+                            <div class="test-case">
+                                <strong>Test 1:</strong> [3, 1, 4, 1, 5] → [1, 1, 3, 4, 5]
+                                <span class="test-status" id="test1-status">⏳ Pending</span>
+                            </div>
+                            <div class="test-case">
+                                <strong>Test 2:</strong> [9, 7, 5, 3, 1] → [1, 3, 5, 7, 9]
+                                <span class="test-status" id="test2-status">⏳ Pending</span>
+                            </div>
+                            <div class="test-case">
+                                <strong>Test 3:</strong> [1, 2, 3, 4, 5] → [1, 2, 3, 4, 5]
+                                <span class="test-status" id="test3-status">⏳ Pending</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="output-section">
+                        <h3>Performance Analysis</h3>
+                        <div class="performance-stats" id="performance-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Comparisons:</span>
+                                <span class="stat-value" id="comparisons-count">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Swaps:</span>
+                                <span class="stat-value" id="swaps-count">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Execution Time:</span>
+                                <span class="stat-value" id="execution-time">0.00ms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Algorithm Comparison Tool -->
+        <section id="comparison-tool" class="comparison-tool" style="display: none;">
+            <h2>⚡ Algorithm Performance Comparator</h2>
+            <div class="comparator-container">
+                <div class="comparator-controls">
+                    <div class="control-group">
+                        <label>Select Algorithms:</label>
+                        <div class="algorithm-checkboxes" id="algorithm-checkboxes">
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="bubbleSort" checked> Bubble Sort
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="selectionSort" checked> Selection Sort
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="insertionSort" checked> Insertion Sort
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="mergeSort"> Merge Sort
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="quickSort"> Quick Sort
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="heapSort"> Heap Sort
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Test Data Size:</label>
+                        <input type="range" id="comparison-size" min="10" max="100" value="50" class="size-slider">
+                        <span class="size-value" id="comparison-size-value">50</span> elements
+                    </div>
+
+                    <div class="control-group">
+                        <label>Data Pattern:</label>
+                        <select id="data-pattern" class="pattern-select">
+                            <option value="random">Random</option>
+                            <option value="sorted">Already Sorted</option>
+                            <option value="reverse">Reverse Sorted</option>
+                            <option value="nearly">Nearly Sorted</option>
+                            <option value="few-unique">Few Unique Values</option>
+                        </select>
+                    </div>
+
+                    <button id="run-comparison" class="run-comparison-btn">Run Performance Test</button>
+                </div>
+
+                <div class="comparison-results" id="comparison-results">
+                    <div class="results-chart">
+                        <h3>Performance Results</h3>
+                        <canvas id="comparison-chart" width="600" height="400"></canvas>
+                    </div>
+
+                    <div class="results-table">
+                        <table id="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Algorithm</th>
+                                    <th>Time (ms)</th>
+                                    <th>Comparisons</th>
+                                    <th>Swaps</th>
+                                    <th>Stability</th>
+                                    <th>In-Place</th>
+                                </tr>
+                            </thead>
+                            <tbody id="results-body">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

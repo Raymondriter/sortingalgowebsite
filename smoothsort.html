@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoothsort - Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">SortViz</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Algorithms</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-section">
+                            <h4>Simple Sorts (O(n²))</h4>
+                            <a href="bubble-sort.html">Bubble Sort</a>
+                            <a href="selection-sort.html">Selection Sort</a>
+                            <a href="insertion-sort.html">Insertion Sort</a>
+                            <a href="gnome-sort.html">Gnome Sort</a>
+                            <a href="cocktail-sort.html">Cocktail Shaker Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Efficient Sorts (O(n log n))</h4>
+                            <a href="merge-sort.html">Merge Sort</a>
+                            <a href="quick-sort.html">Quick Sort</a>
+                            <a href="heap-sort.html">Heap Sort</a>
+                            <a href="shell-sort.html">Shell Sort</a>
+                            <a href="comb-sort.html">Comb Sort</a>
+                            <a href="smoothsort.html">Smoothsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Hybrid Sorts</h4>
+                            <a href="timsort.html">Timsort</a>
+                            <a href="introsort.html">Introsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Distribution Sorts</h4>
+                            <a href="counting-sort.html">Counting Sort</a>
+                            <a href="radix-sort.html">Radix Sort</a>
+                            <a href="bucket-sort.html">Bucket Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Educational Sorts</h4>
+                            <a href="bogo-sort.html">Bogo Sort</a>
+                            <a href="sleep-sort.html">Sleep Sort</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="comparison.html" class="nav-link">Comparison</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="visualizer-container">
+            <div class="algorithm-header">
+                <h1 class="algorithm-title">Smoothsort</h1>
+                <p class="algorithm-description">
+                    Smoothsort is an adaptive, hybrid sorting algorithm that combines concepts from heap sort
+                    and insertion sort. It uses a Leonardo heap (a variation of a binary heap) to maintain
+                    a collection of heaps of varying sizes, allowing it to take advantage of existing order
+                    in the input data while providing worst-case guarantees.
+                </p>
+            </div>
+
+            <div class="complexity-analysis">
+                <h3>Complexity Analysis</h3>
+                <div class="complexity-grid">
+                    <div class="complexity-item">
+                        <h4>Best Case</h4>
+                        <p>O(n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Average Case</h4>
+                        <p>O(n log n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Worst Case</h4>
+                        <p>O(n log n)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Space Complexity</h4>
+                        <p>O(1)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualizer-section">
+                <div class="controls">
+                    <button class="control-btn algorithm-select" data-algorithm="smoothsort">Select Algorithm</button>
+                    <button class="control-btn" id="play-btn">Play</button>
+                    <button class="control-btn" id="pause-btn" style="display: none;">Pause</button>
+                    <button class="control-btn" id="reset-btn">Reset</button>
+                    <button class="control-btn" id="step-btn">Step Forward</button>
+                    <button class="control-btn" id="randomize-btn">Randomize</button>
+
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speed-slider" min="1" max="100" value="50">
+                    </div>
+
+                    <div class="size-control">
+                        <label>Size:</label>
+                        <input type="range" id="size-slider" min="5" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="visualizer-area">
+                    <div class="canvas-container">
+                        <canvas id="visualizer-canvas"></canvas>
+                    </div>
+                    <div class="code-container">
+                        <pre id="code-display">
+// Smoothsort (Conceptual Implementation)
+// Uses Leonardo numbers and heap operations
+
+function smoothsort(arr) {
+    // Leonardo numbers: 1, 1, 3, 5, 9, 15, 25, 41, 67, 109...
+    const leo = [1, 1, 3, 5, 9, 15, 25, 41, 67];
+
+    // Build initial heap structure
+    let heapSize = 0;
+
+    // Gradually build heaps from right to left
+    for (let i = 0; i < arr.length; i++) {
+        // Add element to heap structure
+        heapSize++;
+
+        // Maintain heap property
+        // (Complex heap operations with Leonardo numbers)
+    }
+
+    // Extract elements in sorted order
+    for (let i = arr.length - 1; i >= 0; i--) {
+        // Extract maximum element (root of largest heap)
+        // Reorganize remaining heaps
+        heapSize--;
+    }
+
+    return arr;
+}
+
+// Note: This is a simplified conceptual view
+// Actual smoothsort implementation is quite complex
+// involving Leonardo trees and sophisticated heap operations</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-metrics" id="performance-metrics" style="display: none;">
+                <div class="metrics-timer">
+                    <span>Execution Time:</span>
+                    <span class="timer-display" id="timer-display">0.00s</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Comparisons</div>
+                        <div class="metric-value" id="comparisons-count">0</div>
+                        <div class="metric-comparison">O(n log n) = 282</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Swaps</div>
+                        <div class="metric-value" id="swaps-count">0</div>
+                        <div class="metric-comparison">O(n log n) = 282</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Array Size</div>
+                        <div class="metric-value" id="array-size-display">50</div>
+                        <div class="metric-comparison">Current</div>
+                    </div>
+                </div>
+                <div class="metrics-controls">
+                    <button class="metrics-btn" id="start-benchmark">Benchmark</button>
+                    <button class="metrics-btn" id="reset-metrics">Reset</button>
+                    <button class="metrics-btn" id="compare-algorithms">Compare All</button>
+                </div>
+            </div>
+
+            <div class="sound-controls" id="sound-controls" style="display: none;">
+                <h4>🔊 Sound Effects</h4>
+                <div class="sound-grid">
+                    <div class="sound-item">
+                        <label class="sound-label">Enable Sounds</label>
+                        <input type="checkbox" class="sound-toggle" id="sound-toggle" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Comparison Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="comparison-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Swap Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="swap-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Volume</label>
+                        <input type="range" class="sound-volume" id="volume-slider" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+
+            <div class="validation-panel" id="validation-panel" style="display: none;">
+                <h4>✅ Algorithm Validation</h4>
+                <div class="validation-status" id="validation-status">
+                    <span>Status: </span>
+                    <span id="validation-text">Ready</span>
+                </div>
+                <div class="validation-details">
+                    <div class="validation-detail">
+                        <span class="validation-original">Original:</span>
+                        <span id="original-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-sorted">Sorted:</span>
+                        <span id="sorted-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-expected">Expected:</span>
+                        <span id="expected-array">[]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h3>How Smoothsort Works</h3>
+                <p>
+                    Smoothsort uses Leonardo numbers to create a flexible heap structure that can adapt to
+                    the existing order in the data. It maintains a collection of heaps of various sizes,
+                    allowing it to efficiently handle both random and partially sorted data.
+                </p>
+
+                <h4>Leonardo Numbers:</h4>
+                <ul>
+                    <li><strong>Sequence:</strong> 1, 1, 3, 5, 9, 15, 25, 41, 67, 109...</li>
+                    <li><strong>Property:</strong> Each number is sum of previous + 1 + previous previous</li>
+                    <li><strong>Purpose:</strong> Define optimal heap sizes for efficient merging</li>
+                    <li><strong>Mathematical basis:</strong> Related to balanced tree structures</li>
+                </ul>
+
+                <h4>Algorithm Strategy:</h4>
+                <ol>
+                    <li><strong>Build Heap Forest:</strong> Create multiple heaps of Leonardo sizes</li>
+                    <li><strong>Adaptive Structure:</strong> Adjust heap sizes based on data patterns</li>
+                    <li><strong>Maintain Order:</strong> Use heap operations to preserve sorted regions</li>
+                    <li><strong>Extract Maximum:</strong> Remove largest element and reorganize</li>
+                    <li><strong>Dynamic Sizing:</strong> Continuously adjust heap structure</li>
+                </ol>
+
+                <h4>Key Characteristics:</h4>
+                <ul>
+                    <li><strong>Adaptive:</strong> Takes advantage of existing order in data</li>
+                    <li><strong>In-place:</strong> Requires only constant extra space O(1)</li>
+                    <li><strong>Guaranteed performance:</strong> Always O(n log n) worst case</li>
+                    <li><strong>Complex implementation:</strong> Sophisticated heap management</li>
+                </ul>
+
+                <h4>Advantages:</h4>
+                <ul>
+                    <li><strong>Best of both worlds:</strong> Adaptive like insertion sort, guaranteed like heap sort</li>
+                    <li><strong>Space efficient:</strong> In-place sorting with no additional arrays</li>
+                    <li><strong>Predictable performance:</strong> No worst-case degradation</li>
+                    <li><strong>Theoretical elegance:</strong> Beautiful mathematical foundation</li>
+                </ul>
+
+                <h4>Complexity Insights:</h4>
+                <ul>
+                    <li><strong>Best Case:</strong> O(n) when data is already sorted</li>
+                    <li><strong>Worst Case:</strong> O(n log n) guaranteed</li>
+                    <li><strong>Average Case:</strong> O(n log n) with good constants</li>
+                    <li><strong>Adaptive nature:</strong> Performance improves with sorted data</li>
+                </ul>
+
+                <h4>Historical Context:</h4>
+                <ul>
+                    <li><strong>Invented:</strong> 1980s by Edsger W. Dijkstra</li>
+                    <li><strong>Published:</strong> In "The Art of Programming" context</li>
+                    <li><strong>Motivation:</strong> Combine adaptability of insertion sort with guarantees of heap sort</li>
+                    <li><strong>Recognition:</strong> Demonstrates Dijkstra's algorithm design philosophy</li>
+                </ul>
+
+                <h4>Implementation Complexity:</h4>
+                <div style="background-color: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
+                    <strong>Note:</strong> Smoothsort is one of the most complex sorting algorithms to implement correctly.
+                    It requires deep understanding of heap operations and Leonardo number properties.
+                </div>
+
+                <h4>Educational Value:</h4>
+                <ul>
+                    <li><strong>Advanced algorithms:</strong> Shows sophisticated data structure usage</li>
+                    <li><strong>Mathematical beauty:</strong> Demonstrates elegant mathematical foundations</li>
+                    <li><strong>Adaptive design:</strong> Illustrates how algorithms can adapt to data</li>
+                    <li><strong>Theoretical depth:</strong> Requires understanding of heap theory and number sequences</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

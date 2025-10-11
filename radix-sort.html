@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radix Sort - Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">SortViz</h1>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="dropdown">
+                    <button class="nav-link dropdown-btn">Algorithms</button>
+                    <div class="dropdown-content">
+                        <div class="dropdown-section">
+                            <h4>Simple Sorts (O(n²))</h4>
+                            <a href="bubble-sort.html">Bubble Sort</a>
+                            <a href="selection-sort.html">Selection Sort</a>
+                            <a href="insertion-sort.html">Insertion Sort</a>
+                            <a href="gnome-sort.html">Gnome Sort</a>
+                            <a href="cocktail-sort.html">Cocktail Shaker Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Efficient Sorts (O(n log n))</h4>
+                            <a href="merge-sort.html">Merge Sort</a>
+                            <a href="quick-sort.html">Quick Sort</a>
+                            <a href="heap-sort.html">Heap Sort</a>
+                            <a href="shell-sort.html">Shell Sort</a>
+                            <a href="comb-sort.html">Comb Sort</a>
+                            <a href="smoothsort.html">Smoothsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Hybrid Sorts</h4>
+                            <a href="timsort.html">Timsort</a>
+                            <a href="introsort.html">Introsort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Distribution Sorts</h4>
+                            <a href="counting-sort.html">Counting Sort</a>
+                            <a href="radix-sort.html">Radix Sort</a>
+                            <a href="bucket-sort.html">Bucket Sort</a>
+                        </div>
+                        <div class="dropdown-section">
+                            <h4>Educational Sorts</h4>
+                            <a href="bogo-sort.html">Bogo Sort</a>
+                            <a href="sleep-sort.html">Sleep Sort</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="comparison.html" class="nav-link">Comparison</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="visualizer-container">
+            <div class="algorithm-header">
+                <h1 class="algorithm-title">Radix Sort</h1>
+                <p class="algorithm-description">
+                    Radix Sort is a non-comparison sorting algorithm that sorts numbers by processing individual
+                    digits. It works by sorting numbers based on each digit position, starting from the least
+                    significant digit (LSD) or most significant digit (MSD), using a stable sort for each digit.
+                </p>
+            </div>
+
+            <div class="complexity-analysis">
+                <h3>Complexity Analysis</h3>
+                <div class="complexity-grid">
+                    <div class="complexity-item">
+                        <h4>Best Case</h4>
+                        <p>O(nk)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Average Case</h4>
+                        <p>O(nk)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Worst Case</h4>
+                        <p>O(nk)</p>
+                    </div>
+                    <div class="complexity-item">
+                        <h4>Space Complexity</h4>
+                        <p>O(n + k)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="visualizer-section">
+                <div class="controls">
+                    <button class="control-btn algorithm-select" data-algorithm="radixSort">Select Algorithm</button>
+                    <button class="control-btn" id="play-btn">Play</button>
+                    <button class="control-btn" id="pause-btn" style="display: none;">Pause</button>
+                    <button class="control-btn" id="reset-btn">Reset</button>
+                    <button class="control-btn" id="step-btn">Step Forward</button>
+                    <button class="control-btn" id="randomize-btn">Randomize</button>
+
+                    <div class="speed-control">
+                        <label>Speed:</label>
+                        <input type="range" id="speed-slider" min="1" max="100" value="50">
+                    </div>
+
+                    <div class="size-control">
+                        <label>Size:</label>
+                        <input type="range" id="size-slider" min="5" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="visualizer-area">
+                    <div class="canvas-container">
+                        <canvas id="visualizer-canvas"></canvas>
+                    </div>
+                    <div class="code-container">
+                        <pre id="code-display">
+function radixSort(arr) {
+    // Find the maximum number to determine number of digits
+    const max = Math.max(...arr);
+
+    // Get number of digits
+    const digits = max.toString().length;
+
+    // Perform counting sort for each digit
+    for (let digit = 0; digit < digits; digit++) {
+        countingSortByDigit(arr, digit);
+    }
+
+    return arr;
+}
+
+function countingSortByDigit(arr, digit) {
+    const n = arr.length;
+    const output = new Array(n);
+    const count = new Array(10).fill(0);
+
+    // Count occurrences of each digit (0-9)
+    for (let i = 0; i < n; i++) {
+        const digitValue = getDigit(arr[i], digit);
+        count[digitValue]++;
+    }
+
+    // Cumulative count
+    for (let i = 1; i < 10; i++) {
+        count[i] += count[i - 1];
+    }
+
+    // Build output array
+    for (let i = n - 1; i >= 0; i--) {
+        const digitValue = getDigit(arr[i], digit);
+        output[count[digitValue] - 1] = arr[i];
+        count[digitValue]--;
+    }
+
+    // Copy back to original array
+    for (let i = 0; i < n; i++) {
+        arr[i] = output[i];
+    }
+}
+
+function getDigit(num, digit) {
+    return Math.floor(Math.abs(num) / Math.pow(10, digit)) % 10;
+}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-metrics" id="performance-metrics" style="display: none;">
+                <div class="metrics-timer">
+                    <span>Execution Time:</span>
+                    <span class="timer-display" id="timer-display">0.00s</span>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Comparisons</div>
+                        <div class="metric-value" id="comparisons-count">0</div>
+                        <div class="metric-comparison">O(nk) = 50</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Swaps</div>
+                        <div class="metric-value" id="swaps-count">0</div>
+                        <div class="metric-comparison">O(nk) = 50</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Array Size</div>
+                        <div class="metric-value" id="array-size-display">50</div>
+                        <div class="metric-comparison">Current</div>
+                    </div>
+                </div>
+                <div class="metrics-controls">
+                    <button class="metrics-btn" id="start-benchmark">Benchmark</button>
+                    <button class="metrics-btn" id="reset-metrics">Reset</button>
+                    <button class="metrics-btn" id="compare-algorithms">Compare All</button>
+                </div>
+            </div>
+
+            <div class="sound-controls" id="sound-controls" style="display: none;">
+                <h4>🔊 Sound Effects</h4>
+                <div class="sound-grid">
+                    <div class="sound-item">
+                        <label class="sound-label">Enable Sounds</label>
+                        <input type="checkbox" class="sound-toggle" id="sound-toggle" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Comparison Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="comparison-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Swap Sound</label>
+                        <input type="checkbox" class="sound-toggle" id="swap-sound" checked>
+                    </div>
+                    <div class="sound-item">
+                        <label class="sound-label">Volume</label>
+                        <input type="range" class="sound-volume" id="volume-slider" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+
+            <div class="validation-panel" id="validation-panel" style="display: none;">
+                <h4>✅ Algorithm Validation</h4>
+                <div class="validation-status" id="validation-status">
+                    <span>Status: </span>
+                    <span id="validation-text">Ready</span>
+                </div>
+                <div class="validation-details">
+                    <div class="validation-detail">
+                        <span class="validation-original">Original:</span>
+                        <span id="original-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-sorted">Sorted:</span>
+                        <span id="sorted-array">[]</span>
+                    </div>
+                    <div class="validation-detail">
+                        <span class="validation-expected">Expected:</span>
+                        <span id="expected-array">[]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h3>How Radix Sort Works</h3>
+                <p>
+                    Radix Sort processes numbers digit by digit, using a stable sort (like counting sort)
+                    for each digit position. It can work from either the least significant digit (LSD) or
+                    most significant digit (MSD).
+                </p>
+
+                <h4>Algorithm Steps (LSD Radix Sort):</h4>
+                <ol>
+                    <li><strong>Find Maximum:</strong> Determine the number with most digits</li>
+                    <li><strong>For Each Digit Position:</strong> Starting from least significant digit</li>
+                    <li><strong>Extract Digit:</strong> Get the digit at current position for each number</li>
+                    <li><strong>Stable Sort:</strong> Use counting sort to sort by current digit</li>
+                    <li><strong>Repeat:</strong> Move to next more significant digit</li>
+                    <li><strong>Complete:</strong> Array is sorted after processing all digits</li>
+                </ol>
+
+                <h4>Digit Positions:</h4>
+                <ul>
+                    <li><strong>Units Place (10⁰):</strong> Rightmost digit</li>
+                    <li><strong>Tens Place (10¹):</strong> Second digit from right</li>
+                    <li><strong>Hundreds Place (10²):</strong> Third digit from right</li>
+                    <li><strong>Pattern:</strong> Each position represents power of 10</li>
+                </ul>
+
+                <h4>Key Characteristics:</h4>
+                <ul>
+                    <li><strong>Stable:</strong> Maintains relative order of equal elements</li>
+                    <li><strong>Non-comparison:</strong> Doesn't compare elements directly</li>
+                    <li><strong>Linear time:</strong> O(nk) where k is the number of digits</li>
+                    <li><strong>Integer-based:</strong> Works best with positive integers</li>
+                </ul>
+
+                <h4>Variants:</h4>
+                <ul>
+                    <li><strong>LSD Radix Sort:</strong> Least Significant Digit first (most common)</li>
+                    <li><strong>MSD Radix Sort:</strong> Most Significant Digit first (more complex)</li>
+                    <li><strong>In-Place Radix Sort:</strong> Memory-efficient variants</li>
+                    <li><strong>Binary Radix Sort:</strong> For binary numbers (fewer buckets)</li>
+                </ul>
+
+                <h4>Real-World Applications:</h4>
+                <ul>
+                    <li><strong>String sorting:</strong> Sorting words by alphabetical order</li>
+                    <li><strong>IP addresses:</strong> Sorting network addresses</li>
+                    <li><strong>Phone numbers:</strong> Sorting contact lists</li>
+                    <li><strong>ID numbers:</strong> Sorting by identification numbers</li>
+                    <li><strong>Postal codes:</strong> Sorting by zip/postal codes</li>
+                </ul>
+
+                <h4>Performance Insights:</h4>
+                <ul>
+                    <li><strong>Time Complexity:</strong> O(nk) where k is the average number of digits</li>
+                    <li><strong>Space Complexity:</strong> O(n + k) for counting arrays</li>
+                    <li><strong>Stable:</strong> Maintains order of equal elements</li>
+                    <li><strong>Parallel-friendly:</strong> Each digit position can be processed independently</li>
+                </ul>
+
+                <h4>Comparison with Other Sorts:</h4>
+                <ul>
+                    <li><strong>vs Counting Sort:</strong> Extension to handle multiple digits</li>
+                    <li><strong>vs Comparison Sorts:</strong> Linear time vs O(n log n)</li>
+                    <li><strong>vs Bucket Sort:</strong> Similar concept but different implementation</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
